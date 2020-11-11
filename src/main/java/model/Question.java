@@ -1,10 +1,15 @@
 package model;
 
 public class Question {
-    String question;
-    String answer;
+    private int id;
+    private String question;
+    private String answer;
 
-    public Question(String question, String answer) {
+    public Question() {
+    }
+
+    public Question(int id, String question, String answer) {
+        this.id = id;
         this.question = question;
         this.answer = answer;
     }
@@ -23,5 +28,18 @@ public class Question {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + id +  ", question=" + question + ", answer=" + answer + "]";
     }
 }

@@ -9,7 +9,7 @@
 
     <context:property-placeholder location="classpath:StudentTest.properties"/>
 
-    <bean id="questionService" class="service.InMemoryQuestionService">
+    <bean id="questionService" class="service.CsvQuestionService">
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
     </bean>
 </beans>

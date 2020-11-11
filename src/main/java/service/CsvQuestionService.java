@@ -1,26 +1,23 @@
 package service;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
+import au.com.bytecode.opencsv.bean.CsvToBean;
+import model.Question;
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import model.Question;
 
-import java.util.*;
-
-public class InMemoryQuestionService implements QuestionService {
-
+public class CsvQuestionService implements QuestionService {
     List<Question> questions = new ArrayList<Question>();
     int countTrue = 0;
     int countFalse = 0;
     int maxNumberOfWrongAnswers;
 
-    {
-        questions.add(new Question(0, "1 + 0 = ", "1"));
-        questions.add(new Question(1, "2 - 1 = ", "1"));
-        questions.add(new Question(2, "1 * 1 = ", "1"));
-        questions.add(new Question(3, "2 в степени 0", "1"));
-        questions.add(new Question(4, "Один за всех, и все за (укажите число)", "1"));
-        questions.add(new Question(5, "(-1) * (-1) =", "1"));
-        questions.add(new Question(6, "Два стула...", "1"));
-        questions.add(new Question(7, "Один", "1"));
-    }
 
     public String askQuestion(int num) {
         if (countFalse >= maxNumberOfWrongAnswers) {
@@ -61,5 +58,31 @@ public class InMemoryQuestionService implements QuestionService {
     public void setMaxNumberOfWrongAnswers(int maxNumberOfWrongAnswers) {
         this.maxNumberOfWrongAnswers = maxNumberOfWrongAnswers;
     }
-}
 
+
+    {
+        CsvToBean csv = new CsvToBean();
+        String csvFilename = "data.csv";
+        CSVReader csvReader = null;
+        try {
+            csvReader = new CSVReader(new FileReader(csvFilename));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //Set column mapping strategy
+        List list = csv.parse(setColumnMapping(), csvReader);
+        for (Object object : list) {
+            Question question = (Question) object;
+            questions.add(question);
+        }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static ColumnPositionMappingStrategy setColumnMapping() {
+        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
+        strategy.setType(Question.class);
+        String[] columns = new String[]{"id", "question", "answer"};
+        strategy.setColumnMapping(columns);
+        return strategy;
+    }
+}

@@ -1,12 +1,14 @@
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import service.CsvQuestionService;
 import service.InMemoryQuestionService;
+import service.QuestionService;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
-        InMemoryQuestionService questionService = context.getBean(InMemoryQuestionService.class);
+        QuestionService questionService = context.getBean(CsvQuestionService.class);
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < questionService.length(); i++) {
             // Задать вопрос

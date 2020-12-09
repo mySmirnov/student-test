@@ -1,16 +1,47 @@
 package service;
 
+import model.Question;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
 public interface QuestionService {
-    // 1. Задать вопрос юзеру
-    String askQuestion(int num);
+    /**
+     * @param num - номер вопроса
+     * @return вопрос из списка по его номеру
+     */
+    Optional<String> getQuestion(int num);
 
-    // 2. Принять ответ от юзера
-    String takeAnswer(int num, String question);
+    /**
+     * @param num    - номер вопроса
+     * @param answer - ответ пользователя на соответствующий вопрос
+     * @return истенность ответа пользователя
+     */
+    boolean checkAnswer(int num, String answer);
 
-    // 3. ответьить юзеру (выдать результат)
-    String reportResult();
 
-    // [?] определение длинны списка вопросов (для сокрытия реализакии)
-    // либо вернуть список или что то заранее подготовить либо что-то еще
+    /**
+     * @return общий результат тестирования
+     */
+    boolean resultAll();
+
+    /**
+     * @return результат тестирования
+     */
+    String report();
+
+    /**
+     * @return количество вопросов в тесте
+     */
     int length();
+
+    /**
+     * инициализирует данные
+     */
+    void init();
+    //-------------------------------------------------------------------------------------
+    void setMaxNumberOfWrongAnswers(int maxNumberOfWrongAnswers);
+//
+//    void set();
 }

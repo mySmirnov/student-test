@@ -7,9 +7,10 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:StudentTest.properties"/>
+    <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="questionService" class="service.CsvQuestionService">
+    <bean id="questionService" class="service.CsvQuestionService" init-method="init" >
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
+        <property name="fileName" value="data.csv"/>
     </bean>
 </beans>

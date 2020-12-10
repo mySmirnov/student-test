@@ -26,10 +26,6 @@ class InMemoryQuestionServiceTest {
     }
 
     @Test
-        // этот метод возвращает текст вопроса по запросу его номера
-        // если вопрос с таки номером существует и количество неверных ответов меньше допустимого максимума
-        // возвращается текст вопроса
-        // иначе выбрасывает ошибку индексации
     void ShouldReturnStringIfMaxNumberOfWrongAnswersLessThanCountFalse() {
         assertTrue(questionService.getQuestion(0).isPresent());
     }
@@ -53,31 +49,24 @@ class InMemoryQuestionServiceTest {
 
     @Test
     void shouldTrowExceptionIfWrongIndexQuestion() {
-        int num = question0.getId();
-        String answer = question0.getAnswer();
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             questionService.checkAnswer(3, "1");
         });
     }
 
     @Test
-        // этот метод возвращает значение типа boolean
-        // FALSE - если количество неверных ответов привысило допустимый максимум
-        // TURE - в обратном случае тест пройден успешно
     void shouldReturnFalseIfWrongAnswerMoreLessAllowed() {
         questionService.checkAnswer(question0.getId(), question0.getAnswer());
         questionService.checkAnswer(question1.getId(), question1.getAnswer());
         questionService.checkAnswer(question2.getId(), question2.getAnswer());
-        // Проверяем что тест завершен успешео т.е. количество правильных ответов не превысело допустимый максимум
         assertTrue(questionService.resultAll());
     }
 
     @Test
-    void resultAll_shouldReturnFalseIfWrongAnswerMoreMoreAllowed() {
+    void shouldReturnFalseIfWrongAnswerMoreMoreAllowed() {
         questionService.checkAnswer(0, "1");
         questionService.checkAnswer(1, "1");
-        questionService.checkAnswer(2, "");
-        // Проверяем что тест завершен успешео т.е. количество правильных ответов не превысело допустимый максимум
+        questionService.checkAnswer(2, "Wrong Answer");
         assertFalse(questionService.resultAll());
     }
 
@@ -85,10 +74,11 @@ class InMemoryQuestionServiceTest {
     void shouldReturnStringResultIfTextReportOk() {
         questionService.checkAnswer(0, "1");
         questionService.checkAnswer(1, "1");
-        questionService.checkAnswer(2, "");
-        String expected = String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1);
-        String actual = questionService.report();
-        assertEquals(expected, actual);
+        questionService.checkAnswer(2, "Wrong Answer");
+        assertEquals(
+                String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1),
+                questionService.report()
+        );
     }
 
     @Test

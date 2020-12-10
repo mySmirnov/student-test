@@ -24,14 +24,6 @@ public class InMemoryQuestionService extends QuestionServiceImpl {
 
     public void init() {
         logger.info("initialisation");
-//        list.add(new Question(0, "1 + 0 = ", "1"));
-//        list.add(new Question(1, "2 - 1 = ", "1"));
-//        list.add(new Question(2, "1 * 1 = ", "1"));
-//        list.add(new Question(3, "2 в степени 0", "1"));
-//        list.add(new Question(4, "Один за всех, и все за (укажите число)", "1"));
-//        list.add(new Question(5, "(-1) * (-1) =", "1"));
-//        list.add(new Question(6, "Два стула...", "1"));
-//        list.add(new Question(7, "Один", "1"));
         setQuestions(list);
     }
 }

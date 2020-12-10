@@ -2,6 +2,7 @@ package service;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,20 +31,19 @@ public class CsvQuestionService extends QuestionServiceImpl {
         this.fileName = fileName;
     }
 
-    @Override
     public void init() {
-        List <Question> questions = new ArrayList<>();
+        List<Question> questions = new ArrayList<>();
         logger.info("initialisation");
         CsvToBean csv = new CsvToBean();
-        try (CSVReader csvReader = new CSVReader(new FileReader(fileName))) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName)))) {
             List list = csv.parse(setColumnMapping(), csvReader);
             for (Object object : list) {
                 Question question = (Question) object;
                 questions.add(question);
             }
-        } catch (IOException ioException) {
-            logger.error(ioException.getMessage());
-            throw new IllegalStateException("Exception file");
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new IllegalStateException("Exception file", ex);
         }
         setQuestions(questions);
     }

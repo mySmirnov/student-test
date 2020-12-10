@@ -1,39 +1,24 @@
 package service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CsvQuestionServiceTest {
 
     @Test
-    void setFileName() {
-
-    }
-
-    @Test
-    void init() {
-        QuestionService questionService = new CsvQuestionService("data.csv");
+    void init_shouldReturnQuestionsLoadedFromFile() {
+        CsvQuestionService questionService = new CsvQuestionService("/data.csv");
         questionService.init();
-        questionService.setMaxNumberOfWrongAnswers(1);
-        assertTrue(questionService.getQuestion(0).isPresent());
+        assertEquals("1 + 0 = ", questionService.getQuestion(0).get());
     }
 
     @Test
-    void init_exception() {
-        try {
-            QuestionService questionService = new CsvQuestionService("data.csv");
-            questionService.init();
-            questionService.setMaxNumberOfWrongAnswers(1);
-            assertTrue(questionService.getQuestion(0).isPresent());
-        } catch (IllegalStateException exception) {
-            String actual = exception.getMessage();
-            String expected = "Exception file";
-            assertEquals(expected, actual);
-        }
+    void shouldFailIfFileIsNotAvailable() {
+        CsvQuestionService questionService = new CsvQuestionService("/doesNotExist.csv");
+        Assertions.assertThrows(IllegalStateException.class, questionService::init);
     }
-
-
 }

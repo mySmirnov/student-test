@@ -35,13 +35,4 @@ public interface QuestionService {
      * @return количество вопросов в тесте
      */
     int length();
-
-    /**
-     * инициализирует данные
-     */
-    void init();
-    //-------------------------------------------------------------------------------------
-    void setMaxNumberOfWrongAnswers(int maxNumberOfWrongAnswers);
-//
-//    void set();
 }

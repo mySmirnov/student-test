@@ -22,8 +22,7 @@ public abstract class QuestionServiceImpl implements QuestionService {
     }
 
     public Optional<String> getQuestion(int num) {
-        checkNum(num);
-        if (countOfWrongAnswer >= maxNumberOfWrongAnswers) {
+        if (countOfWrongAnswer > maxNumberOfWrongAnswers || num >= length()) {
             return Optional.empty();
         } else {
             return Optional.of(questions.get(num).getQuestion());
@@ -42,7 +41,8 @@ public abstract class QuestionServiceImpl implements QuestionService {
     }
 
     public boolean resultAll() {
-        return maxNumberOfWrongAnswers > countOfWrongAnswer && countOfCorrectAnswer + countOfWrongAnswer == length();
+        return maxNumberOfWrongAnswers >= countOfWrongAnswer &&
+                countOfCorrectAnswer + countOfWrongAnswer == length();
     }
 
     public String report() {

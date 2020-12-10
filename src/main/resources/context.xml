@@ -11,6 +11,6 @@
 
     <bean id="questionService" class="service.CsvQuestionService" init-method="init" >
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
-        <property name="fileName" value="data.csv"/>
+        <property name="fileName" value="/data.csv"/>
     </bean>
 </beans>

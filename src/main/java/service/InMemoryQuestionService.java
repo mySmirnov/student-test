@@ -34,8 +34,5 @@ public class InMemoryQuestionService extends QuestionServiceImpl {
 //        list.add(new Question(7, "Один", "1"));
         setQuestions(list);
     }
-
-
-
 }
 

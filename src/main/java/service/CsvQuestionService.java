@@ -20,9 +20,12 @@ public class CsvQuestionService extends QuestionServiceImpl {
     public CsvQuestionService() {
         super();
     }
+
     public CsvQuestionService(String fileName) {
+        super();
         this.fileName = fileName;
     }
+
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -40,6 +43,7 @@ public class CsvQuestionService extends QuestionServiceImpl {
             }
         } catch (IOException ioException) {
             logger.error(ioException.getMessage());
+            throw new IllegalStateException("Exception file");
         }
         setQuestions(questions);
     }

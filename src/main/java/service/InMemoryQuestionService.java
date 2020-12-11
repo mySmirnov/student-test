@@ -12,12 +12,10 @@ public class InMemoryQuestionService extends QuestionServiceImpl {
     List <Question> list = new ArrayList<>();
 
     public InMemoryQuestionService(List<Question> list) {
-        super();
         this.list = list;
     }
 
     public InMemoryQuestionService() {
-        super();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(CsvQuestionService.class);

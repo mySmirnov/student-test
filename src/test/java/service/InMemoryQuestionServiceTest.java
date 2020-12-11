@@ -5,76 +5,74 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryQuestionServiceTest {
-    List<Question> questions = new ArrayList<>();
-    InMemoryQuestionService questionService = new InMemoryQuestionService(questions);
-    Question question0 = new Question(0, "0 + 1 = ", "1");
-    Question question1 = new Question(1, "2 - 1 = ", "1");
-    Question question2 = new Question(2, "1 * 1 = ", "1");
+    private InMemoryQuestionService questionService;
+    // Тут IIdea подсказывает что это поле может быть finale ...  есть ли для моего приложения в этом смысл
+    private final List<Question> questions = Arrays.asList(
+            new Question(0, "0 + 1 = ", "1"),
+            new Question(1, "2 - 1 = ", "1"),
+            new Question(2, "1 * 1 = ", "1")
+    );
 
     @BeforeEach
     void setUp() {
-        questions.add(question0);
-        questions.add(question1);
-        questions.add(question2);
+        questionService = new InMemoryQuestionService(questions);
         questionService.init();
     }
 
     @Test
-    void ShouldReturnStringIfMaxNumberOfWrongAnswersLessThanCountFalse() {
+    void shouldReturnStringIfMaxNumberOfWrongAnswersLessThanCountFalse() {
         assertTrue(questionService.getQuestion(0).isPresent());
     }
 
     @Test
-    void ShouldReturnIsEmptyIfMaxNumberOfWrongAnswersMoreOrEqualsThanCountFalse() {
+    void shouldReturnIsEmptyIfMaxNumberOfWrongAnswersMoreOrEqualsThanCountFalse() {
         questionService.setMaxNumberOfWrongAnswers(-1);
         assertFalse(questionService.getQuestion(0).isPresent());
     }
 
     @Test
-    void ShouldReturnEmptyIfIndexMoreThanExist() {
+    void shouldReturnEmptyIfIndexMoreThanExist() {
         assertFalse(questionService.getQuestion(3).isPresent());
     }
 
     @Test
-    void ShouldOk() {
+    void shouldOk() {
         assertTrue(questionService.checkAnswer(1, "1"));
         assertFalse(questionService.checkAnswer(1, "Wrong Answer"));
     }
 
     @Test
     void shouldTrowExceptionIfWrongIndexQuestion() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            questionService.checkAnswer(3, "1");
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> questionService.checkAnswer(3, "1"));
     }
 
     @Test
     void shouldReturnFalseIfWrongAnswerMoreLessAllowed() {
-        questionService.checkAnswer(question0.getId(), question0.getAnswer());
-        questionService.checkAnswer(question1.getId(), question1.getAnswer());
-        questionService.checkAnswer(question2.getId(), question2.getAnswer());
+        questionService.checkAnswer(0,"1");
+        questionService.checkAnswer(1,"1");
+        questionService.checkAnswer(2,"1");
         assertTrue(questionService.resultAll());
     }
 
     @Test
     void shouldReturnFalseIfWrongAnswerMoreMoreAllowed() {
-        questionService.checkAnswer(0, "1");
-        questionService.checkAnswer(1, "1");
-        questionService.checkAnswer(2, "Wrong Answer");
+        questionService.checkAnswer(0,"1");
+        questionService.checkAnswer(1,"1");
+        questionService.checkAnswer(2,"Wrong Answer");
         assertFalse(questionService.resultAll());
     }
 
     @Test
     void shouldReturnStringResultIfTextReportOk() {
-        questionService.checkAnswer(0, "1");
-        questionService.checkAnswer(1, "1");
-        questionService.checkAnswer(2, "Wrong Answer");
+        questionService.checkAnswer(0,"1");
+        questionService.checkAnswer(1,"1");
+        questionService.checkAnswer(2,"Wrong Answer");
         assertEquals(
                 String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1),
                 questionService.report()

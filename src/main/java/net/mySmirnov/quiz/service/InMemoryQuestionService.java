@@ -1,12 +1,10 @@
-package service;
+package net.mySmirnov.quiz.service;
 
-import model.Question;
+import net.mySmirnov.quiz.model.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.Optional;
 
 public class InMemoryQuestionService extends QuestionServiceImpl {
     private List<Question> list = new ArrayList<>();

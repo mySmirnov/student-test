@@ -1,8 +1,7 @@
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import service.QuestionService;
+package net.mySmirnov.quiz;
 
-import java.util.Optional;
-import java.util.Scanner;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import net.mySmirnov.quiz.service.QuestionService;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package service;
+package net.mySmirnov.quiz.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

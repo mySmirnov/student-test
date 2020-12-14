@@ -1,5 +1,6 @@
-import service.CsvQuestionService;
-import service.QuestionService;
+package net.mySmirnov.quiz;
+
+import net.mySmirnov.quiz.service.QuestionService;
 
 import java.util.Optional;
 import java.util.Scanner;

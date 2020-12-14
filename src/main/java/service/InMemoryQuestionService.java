@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.Optional;
 
 public class InMemoryQuestionService extends QuestionServiceImpl {
-    List <Question> list = new ArrayList<>();
+    private List<Question> list = new ArrayList<>();
 
     public InMemoryQuestionService(List<Question> list) {
         this.list = list;

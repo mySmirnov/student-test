@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuizApplicationTest {
     CsvQuestionService questionService = new CsvQuestionService();
-    QuizApplication quizApplication = new QuizApplication(questionService) ;
+    QuizApplication quizApplication = new QuizApplication(questionService);
 
     @Test
     void run() {

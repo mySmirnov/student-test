@@ -9,7 +9,7 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="questionService" class="service.CsvQuestionService" init-method="init" >
+    <bean id="questionService" class="service.CsvQuestionService" init-method="init">
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
         <property name="resourceName" value="/data.csv"/>
     </bean>

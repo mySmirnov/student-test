@@ -54,25 +54,25 @@ class InMemoryQuestionServiceTest {
 
     @Test
     void shouldReturnFalseIfWrongAnswerMoreLessAllowed() {
-        questionService.checkAnswer(0,"1");
-        questionService.checkAnswer(1,"1");
-        questionService.checkAnswer(2,"1");
+        questionService.checkAnswer(0, "1");
+        questionService.checkAnswer(1, "1");
+        questionService.checkAnswer(2, "1");
         assertTrue(questionService.resultAll());
     }
 
     @Test
     void shouldReturnFalseIfWrongAnswerMoreMoreAllowed() {
-        questionService.checkAnswer(0,"1");
-        questionService.checkAnswer(1,"1");
-        questionService.checkAnswer(2,"Wrong Answer");
+        questionService.checkAnswer(0, "1");
+        questionService.checkAnswer(1, "1");
+        questionService.checkAnswer(2, "Wrong Answer");
         assertFalse(questionService.resultAll());
     }
 
     @Test
     void shouldReturnStringResultIfTextReportOk() {
-        questionService.checkAnswer(0,"1");
-        questionService.checkAnswer(1,"1");
-        questionService.checkAnswer(2,"Wrong Answer");
+        questionService.checkAnswer(0, "1");
+        questionService.checkAnswer(1, "1");
+        questionService.checkAnswer(2, "Wrong Answer");
         assertEquals(
                 String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1),
                 questionService.report()

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CsvQuestionServiceTest {
-    
+
     @Test
     void shouldReturnQuestionsLoadedFromFile() {
         CsvQuestionService questionService = new CsvQuestionService("/data.csv");

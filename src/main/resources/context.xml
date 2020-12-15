@@ -9,8 +9,13 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
+    <bean id="quizApplication" class="net.mySmirnov.quiz.QuizApplication">
+        <constructor-arg index="0" ref="questionService"/>
+    </bean>
+
     <bean id="questionService" class="net.mySmirnov.quiz.service.CsvQuestionService" init-method="init">
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
         <property name="resourceName" value="/data.csv"/>
     </bean>
+
 </beans>

@@ -1,6 +1,9 @@
 package net.mySmirnov.quiz;
 
 import net.mySmirnov.quiz.service.QuestionService;
+import net.mySmirnov.quiz.ui.InputUIImpl;
+import net.mySmirnov.quiz.ui.OutputUI;
+import net.mySmirnov.quiz.ui.OutputUIImpl;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -13,28 +16,24 @@ public class QuizApplication {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        try {
             for (int i = 0; i < questionService.length(); i++) {
                 // Задать вопрос
                 Optional<String> question = questionService.getQuestion(i);
                 if (!question.isPresent()) {
                     break;
                 }
-                System.out.println(question.get());
+                new OutputUIImpl().write(question.get());
                 // Принять ответ
-                String answer = scanner.nextLine();
-                System.out.println(questionService.checkAnswer(i, answer));
+                String answer = new InputUIImpl().read();
+                Object obj = questionService.checkAnswer(i, answer);
+                new OutputUIImpl().write(obj);
             }
             // Выдать результат опроса
             System.out.println(questionService.report());
             if (questionService.resultAll()) {
-                System.out.println("Тест пройден успешно!");
+                new OutputUIImpl().write("Тест пройден успешно!");
             } else {
-                System.out.println("Тест провален!");
+                new OutputUIImpl().write("Тест провален!");
             }
-        } catch (RuntimeException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }

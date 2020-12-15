@@ -1,6 +1,7 @@
-package net.mySmirnov.quiz.service;
+package net.mysmirnov.quiz.service;
 
-import net.mySmirnov.quiz.model.Question;
+import net.mysmirnov.quiz.service.InMemoryQuestionService;
+import net.mysmirnov.quiz.model.Question;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

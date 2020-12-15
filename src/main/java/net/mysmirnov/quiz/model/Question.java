@@ -1,4 +1,4 @@
-package net.mySmirnov.quiz.model;
+package net.mysmirnov.quiz.model;
 
 public class Question {
     private int id;

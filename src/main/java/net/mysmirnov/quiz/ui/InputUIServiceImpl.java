@@ -1,8 +1,8 @@
-package net.mySmirnov.quiz.ui;
+package net.mysmirnov.quiz.ui;
 
 import java.util.Scanner;
 
-public class InputUIImpl implements InputUI {
+public class InputUIServiceImpl implements InputUIService {
     @Override
     public String read() {
         Scanner scanner = new Scanner(System.in);

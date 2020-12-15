@@ -1,6 +1,6 @@
-package net.mySmirnov.quiz.service;
+package net.mysmirnov.quiz.service;
 
-import net.mySmirnov.quiz.model.Question;
+import net.mysmirnov.quiz.model.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package net.mySmirnov.quiz.service;
+package net.mysmirnov.quiz.service;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
-import net.mySmirnov.quiz.model.Question;
+import net.mysmirnov.quiz.model.Question;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

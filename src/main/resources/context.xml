@@ -20,7 +20,7 @@
         <property name="resourceName" value="/data.csv"/>
     </bean>
 
-    <bean id="inputUIService" class="net.mysmirnov.quiz.ui.InputUIServiceImpl"/>
+    <bean id="inputUIService" class="net.mysmirnov.quiz.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
 
     <bean id="outputUIService" class="net.mysmirnov.quiz.ui.OutputUIServiceImpl"/>
 

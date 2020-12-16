@@ -2,7 +2,7 @@ package net.mysmirnov.quiz;
 
 public interface QuizApplication {
     /**
-     * Этот метод запускае приложение
+     * Этот метод запускает приложение
      */
     void run();
 }

@@ -1,6 +1,6 @@
-package service;
+package net.mysmirnov.quiz.service;
 
-import model.Question;
+import net.mysmirnov.quiz.model.Question;
 
 import java.util.ArrayList;
 import java.util.List;

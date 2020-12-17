@@ -20,13 +20,6 @@ import static org.mockito.Mockito.*;
 
 class QuizApplicationImplTest {
     private InMemoryQuestionService questionService;
-// где должны инициализироваться данные в.т.ч. эти (предпологаю что в методах)
-//    private final List<Question> questions = Arrays.asList(
-//            new Question(0, "0 + 1 = ", "1")
-//            ,
-//            new Question(1, "2 - 1 = ", "1"),
-//            new Question(2, "1 * 1 = ", "1")
-//    );
 
     @BeforeEach
     void setUp() {
@@ -39,9 +32,6 @@ class QuizApplicationImplTest {
         questionService.init();
     }
 
-    // 1. проверяем что: У нас всего один вопрос, протестируй что мы его задаем пользователю
-    // пользователь отвечает правильно, мы говорим ему true
-    //должен пройти если напечатался вопрос ответ верный и выведе нответ
     @Test
     void shouldOkIfAnswerTrueAndPrintQuestionAndResultAnswer() {
         InMemoryQuestionService questionService1 = new InMemoryQuestionService(Arrays.asList(
@@ -73,7 +63,7 @@ class QuizApplicationImplTest {
         verify(outputUIService).write("0 + 1 = ");
         verify(outputUIService).write(false);
     }
-    //должен пройти если все ответы верны напечатаны их ответы и результат тестирования
+
     @Test
     void shouldOkIfQuizPassAndPrintAllQuestionAndResultAnswerAndResult() {
         InputUIService inputUIService = mock(InputUIService.class);
@@ -90,9 +80,10 @@ class QuizApplicationImplTest {
         inOrder.verify(outputUIService).write("1 * 1 = ");
         inOrder.verify(outputUIService).write(true);
         inOrder.verify(outputUIService)
-                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d",3,3,0));
+                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 3, 0));
         inOrder.verify(outputUIService).write("Тест пройден успешно!");
     }
+
     @Test
     void shouldOkIfQuizFailedAndPrintAllQuestionAndResultAnswerAndResult() {
         InputUIService inputUIService = mock(InputUIService.class);
@@ -109,12 +100,12 @@ class QuizApplicationImplTest {
         inOrder.verify(outputUIService).write("1 * 1 = ");
         inOrder.verify(outputUIService).write(false);
         inOrder.verify(outputUIService)
-                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d",3,2,1));
+                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1));
         inOrder.verify(outputUIService).write("Тест провален!");
     }
 
     @Test
-    void  shouldOkIfQuizEarlyFailedAndPrintAllQuestionAndResultAnswerAndResult() {
+    void shouldOkIfQuizEarlyFailedAndPrintAllQuestionAndResultAnswerAndResult() {
         InputUIService inputUIService = mock(InputUIService.class);
         OutputUIService outputUIService = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, inputUIService, outputUIService);
@@ -127,7 +118,7 @@ class QuizApplicationImplTest {
         inOrder.verify(outputUIService).write("2 - 1 = ");
         inOrder.verify(outputUIService).write(false);
         inOrder.verify(outputUIService)
-                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d",2,1,1));
+                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 2, 1, 1));
         inOrder.verify(outputUIService).write("Тест провален!");
     }
 }

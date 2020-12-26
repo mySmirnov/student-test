@@ -49,6 +49,7 @@ class QuizApplicationImplTest {
         InputUIServiceImpl input = mock(InputUIServiceImpl.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
+        when(input.hasNextLine()).thenReturn(true);
         when(input.read()).thenReturn(Optional.of("1"));
         quizApplication.run();
 
@@ -58,26 +59,11 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldOkIfAnswerFalseAndPrintQuestionAndResultAnswer() {
-        questionService = new InMemoryQuestionService(Arrays.asList(
-                new Question(0, "0 + 1 = ", "1"))
-        );
-        questionService.init();
-        InputUIService input = mock(InputUIService.class);
-        OutputUIService output = mock(OutputUIService.class);
-        QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
-        when(input.read()).thenReturn(Optional.of("2"));
-        quizApplication.run();
-
-        verify(output).write("0 + 1 = ");
-        verify(output).write(false);
-    }
-
-    @Test
     void shouldOkIfQuizPassAndPrintAllQuestionAndResultAnswerAndResult() {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
+        when(input.hasNextLine()).thenReturn(true);
         when(input.read()).thenReturn(Optional.of("1"), Optional.of("1"), Optional.of("1"));
         quizApplication.run();
 
@@ -98,6 +84,7 @@ class QuizApplicationImplTest {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
+        when(input.hasNextLine()).thenReturn(true);
         when(input.read()).thenReturn(Optional.of("1"), Optional.of("1"), Optional.of("2"));
         quizApplication.run();
 
@@ -118,6 +105,7 @@ class QuizApplicationImplTest {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
+        when(input.hasNextLine()).thenReturn(true);
         when(input.read()).thenReturn(Optional.of("1"), Optional.of("1"), Optional.of("2"));
         quizApplication.run();
 
@@ -130,16 +118,38 @@ class QuizApplicationImplTest {
                 .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 3, 2, 1));
         inOrder.verify(output).write("Тест провален!");
     }
+// 1. читаем вопрос, а затем выходим
+// 2. читаем вопрос, вводим пустое значение,
+// 3. читаем вопрос, вводим пустое значение а затем выходим
 
     @Test
     void should1() {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
-        when(input.read()).thenReturn(Optional.of("2") );
+        when(input.hasNextLine()).thenReturn(false);
+        when(input.read()).thenReturn(Optional.empty());
         quizApplication.run();
 
         InOrder inOrder = inOrder(output);
         inOrder.verify(output).write("0 + 1 = ");
+        inOrder.verify(output)
+                .write(String.format("Вы ответили на  %d вопросов, верных ответов - %d, неверных - %d", 0, 0, 0));
+        inOrder.verify(output).write("Тест провален!");
+    }
+
+    @Test
+    void shouldPrintMessageAboutEmptyEnteringValue() {
+        questionService.init();
+        InputUIService input = mock(InputUIService.class);
+        OutputUIService output = mock(OutputUIService.class);
+        QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
+        when(input.hasNextLine()).thenReturn(true);
+        when(input.read()).thenReturn(Optional.empty());
+        quizApplication.run();
+
+        InOrder inOrder = inOrder(output);
+        inOrder.verify(output).write("0 + 1 = ");
+        inOrder.verify(output).write("Вы ввели пустое значение, ответьте на вопрос: ");
     }
 }

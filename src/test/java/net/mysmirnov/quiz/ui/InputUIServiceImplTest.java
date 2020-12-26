@@ -1,5 +1,6 @@
 package net.mysmirnov.quiz.ui;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,23 +14,24 @@ import static org.mockito.Mockito.*;
 
 class InputUIServiceImplTest {
 
-    @BeforeEach
-    void setUp() {
+    private static InputStream defaultSystemIn = System.in;
+
+    private InputUIServiceImpl inputUIService = new InputUIServiceImpl();
+
+    @AfterEach
+    void tearDown() {
+        System.setIn(defaultSystemIn);
     }
 
     @Test
     void read() {
-        InputUIServiceImpl inputUIService = new InputUIServiceImpl();
-        String input = "1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        assertEquals("1", inputUIService.getInput());
+        setSystemIn("1");
+        inputUIService.init();
+        assertEquals(Optional.of("1"), inputUIService.read());
     }
 
-
-
-
-    @Test
-    void hasNextLine() {
+    private void setSystemIn(String s) {
+        InputStream in = new ByteArrayInputStream(s.getBytes());
+        System.setIn(in);
     }
 }

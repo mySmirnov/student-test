@@ -27,7 +27,7 @@ public class QuizApplicationImpl implements QuizApplication {
             }
             output.write(question.get());
 // Принять ответ пользователя и выдать результат -----------------------------------------------------------------------
-            processAnswer(i, question.get());
+            processAnswer(i);
         }
 // Выдать результат опроса ---------------------------------------------------------------------------------------------
         output.write(questionService.report());
@@ -38,7 +38,7 @@ public class QuizApplicationImpl implements QuizApplication {
         }
     }
 
-    private void processAnswer(int i, String question) {
+    private void processAnswer(int i) {
         while (input.hasNextLine()) {
             Optional<String> answer = input.read();
             if (!answer.isPresent()) {

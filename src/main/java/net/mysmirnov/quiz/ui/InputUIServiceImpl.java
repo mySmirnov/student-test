@@ -36,10 +36,4 @@ public class InputUIServiceImpl implements InputUIService {
         this.scanner = scanner;
     }
 
-    public String getInput() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLine();
-    }
-
-
 }

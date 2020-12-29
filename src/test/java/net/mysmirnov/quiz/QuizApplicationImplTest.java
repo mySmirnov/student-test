@@ -30,6 +30,30 @@ class QuizApplicationImplTest {
         questionService.init();
     }
 
+    // проверяем что при приеме empty из QuestionService QuizApplication заевершается корректно
+
+    @Test
+    void shouldFailSafelyInCaseIfQuestionServiceDoesNotHaveExpectedQuestion(){
+        QuestionService questionService1 = mock(QuestionService.class);
+        InputUIServiceImpl input = mock(InputUIServiceImpl.class);
+        OutputUIService output = mock(OutputUIService.class);
+
+        QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService1, input, output);
+
+        when(questionService1.resultAll()).thenReturn(true);
+        when(questionService1.length()).thenReturn(1);
+        when(questionService1.report()).thenReturn("должен выйти из строя в случае, если служба вопросов не ожидала вопроса");
+        when(questionService1.getQuestion(1)).thenReturn(Optional.empty());
+        when(questionService1.length()).thenReturn(1);
+        quizApplication.run();
+
+                InOrder inOrder = inOrder(output);
+        inOrder.verify(output)
+                .write("должен выйти из строя в случае, если служба вопросов не ожидала вопроса");
+        inOrder.
+                verify(output).write("Тест пройден успешно!");
+    }
+
     @Test
     void shouldOkIfAnswerTrueAndPrintQuestionAndResultAnswer() {
         questionService = new InMemoryQuestionService(Arrays.asList(

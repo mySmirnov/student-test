@@ -37,7 +37,6 @@ class InputUIServiceImplTest {
         assertEquals(Optional.empty(), inputUIService.read());
     }
 
-
     @Test
     void shouldReturnEmptyIfEnterEmpty(){
         setSystemIn(" ");

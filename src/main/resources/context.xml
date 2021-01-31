@@ -13,7 +13,9 @@
         <constructor-arg index="0" ref="questionService"/>
         <constructor-arg index="1" ref="inputUIService"/>
         <constructor-arg index="2" ref="outputUIService"/>
+        <constructor-arg index="3" ref="attemptDao"/>
     </bean>
+
 
     <bean id="questionService" class="net.mysmirnov.quiz.service.CsvQuestionService" init-method="init">
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
@@ -23,5 +25,7 @@
     <bean id="inputUIService" class="net.mysmirnov.quiz.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
 
     <bean id="outputUIService" class="net.mysmirnov.quiz.ui.OutputUIServiceImpl"/>
+
+    <bean id="attemptDao" class="net.mysmirnov.quiz.daoimpl.AttemptDaoImpl"/>
 
 </beans>

@@ -22,11 +22,10 @@ public abstract class QuestionServiceImpl implements QuestionService {
     }
 
     public Optional<String> getQuestion(int num) {
-        if (countOfWrongAnswer > maxNumberOfWrongAnswers || num >= length()) {
+        if (num >= length() || countOfWrongAnswer > maxNumberOfWrongAnswers) {
             return Optional.empty();
-        } else {
-            return Optional.of(questions.get(num).getQuestion());
         }
+        return Optional.ofNullable(questions.get(num).getQuestion());
     }
 
     public boolean checkAnswer(int num, String answer) {
@@ -63,5 +62,4 @@ public abstract class QuestionServiceImpl implements QuestionService {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-
 }

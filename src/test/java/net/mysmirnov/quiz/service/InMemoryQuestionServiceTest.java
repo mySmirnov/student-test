@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryQuestionServiceTest {
     private InMemoryQuestionService questionService;
-    // Тут IIdea подсказывает что это поле может быть finale ...  есть ли для моего приложения в этом смысл
     private final List<Question> questions = Arrays.asList(
             new Question(0, "0 + 1 = ", "1"),
             new Question(1, "2 - 1 = ", "1"),
@@ -83,5 +84,15 @@ class InMemoryQuestionServiceTest {
     @Test
     void shouldOkIfLengthASExpected() {
         assertEquals(questions.size(), questionService.length());
+    }
+
+    @Test
+    void should(){
+        List<Question> list = Arrays.asList(
+                new Question()
+        );
+        InMemoryQuestionService questionService = new InMemoryQuestionService(list);
+        questionService.init();
+        assertEquals(Optional.empty(),questionService.getQuestion(0));
     }
 }

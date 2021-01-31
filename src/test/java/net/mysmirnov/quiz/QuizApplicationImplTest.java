@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ class QuizApplicationImplTest {
     // проверяем что при приеме empty из QuestionService QuizApplication заевершается корректно
 
     @Test
-    void shouldFailSafelyInCaseIfQuestionServiceDoesNotHaveExpectedQuestion(){
+    void shouldFailSafelyInCaseIfQuestionServiceDoesNotHaveExpectedQuestion() throws SQLException {
         QuestionService questionService1 = mock(QuestionService.class);
         InputUIServiceImpl input = mock(InputUIServiceImpl.class);
         OutputUIService output = mock(OutputUIService.class);
@@ -55,7 +56,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldOkIfAnswerTrueAndPrintQuestionAndResultAnswer() {
+    void shouldOkIfAnswerTrueAndPrintQuestionAndResultAnswer() throws SQLException {
         questionService = new InMemoryQuestionService(Arrays.asList(
                 new Question(0, "0 + 1 = ", "1"))
         );
@@ -73,7 +74,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldOkIfQuizPassAndPrintAllQuestionAndResultAnswerAndResult() {
+    void shouldOkIfQuizPassAndPrintAllQuestionAndResultAnswerAndResult() throws SQLException {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
@@ -94,7 +95,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldOkIfQuizFailedAndPrintAllQuestionAndResultAnswerAndResult() {
+    void shouldOkIfQuizFailedAndPrintAllQuestionAndResultAnswerAndResult() throws SQLException {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
@@ -115,7 +116,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldOkIfQuizEarlyFailedAndPrintAllQuestionAndResultAnswerAndResult() {
+    void shouldOkIfQuizEarlyFailedAndPrintAllQuestionAndResultAnswerAndResult() throws SQLException {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
@@ -135,7 +136,7 @@ class QuizApplicationImplTest {
 
 
     @Test
-    void shouldPrintMessageAboutResultQuizIfEnterExit() {
+    void shouldPrintMessageAboutResultQuizIfEnterExit() throws SQLException {
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
         QuizApplicationImpl quizApplication = new QuizApplicationImpl(questionService, input, output);
@@ -151,7 +152,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldPrintMessageAboutEmptyEnteringValueAndAnswerIfEnterAnswer() {
+    void shouldPrintMessageAboutEmptyEnteringValueAndAnswerIfEnterAnswer() throws SQLException {
         questionService.init();
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);
@@ -167,7 +168,7 @@ class QuizApplicationImplTest {
     }
 
     @Test
-    void shouldPrintMessageAboutEmptyEnteringValueAndResultIfEnterExit() {
+    void shouldPrintMessageAboutEmptyEnteringValueAndResultIfEnterExit() throws SQLException {
         questionService.init();
         InputUIService input = mock(InputUIService.class);
         OutputUIService output = mock(OutputUIService.class);

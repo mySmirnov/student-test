@@ -1,6 +1,6 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
-import net.mysmirnov.quiz.service.CsvQuestionService;
+import net.mysmirnov.quiz.service.question.CsvQuestionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

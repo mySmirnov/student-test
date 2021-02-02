@@ -1,4 +1,4 @@
-package net.mysmirnov.quiz.ui;
+package net.mysmirnov.quiz.service.ui;
 
 import org.apache.commons.lang3.StringUtils;
 

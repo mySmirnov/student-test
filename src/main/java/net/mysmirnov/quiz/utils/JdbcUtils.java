@@ -15,10 +15,13 @@ public class JdbcUtils {
     private static final String URL = "jdbc:mysql://localhost:3306/quiz";
 
     public static boolean createConnection() {
+        System.out.println("-------------------------");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("++++++++++++++++");
             return true;
+
         } catch (SQLException | ClassNotFoundException e) {
             return false;
         }

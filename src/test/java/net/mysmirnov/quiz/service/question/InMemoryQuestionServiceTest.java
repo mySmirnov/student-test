@@ -1,12 +1,11 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
-import net.mysmirnov.quiz.service.InMemoryQuestionService;
+import net.mysmirnov.quiz.service.question.InMemoryQuestionService;
 import net.mysmirnov.quiz.model.Question;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

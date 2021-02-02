@@ -1,5 +1,6 @@
-package net.mysmirnov.quiz.ui;
+package net.mysmirnov.quiz.service.ui;
 
+import net.mysmirnov.quiz.service.ui.InputUIServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

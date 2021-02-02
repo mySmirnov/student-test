@@ -1,4 +1,4 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
 import net.mysmirnov.quiz.model.Question;
 import org.slf4j.Logger;

@@ -13,6 +13,7 @@ public class AttemptDaoImpl implements AttemptDao {
 
     @Override
     public void insert(Attempt attempt) throws SQLException {
+        System.out.println(con);
         String query = "INSERT INTO attempt(id, dates, rating) VALUES (?,?,?)";
         try (PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setNull(1, Types.INTEGER);

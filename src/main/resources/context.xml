@@ -9,23 +9,26 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="quizApplication" class="net.mysmirnov.quiz.QuizApplicationImpl">
+    <bean id="quizApplication" class="net.mysmirnov.quiz.QuizApplicationImpl" init-method="init" destroy-method="destroy">
         <constructor-arg index="0" ref="questionService"/>
         <constructor-arg index="1" ref="inputUIService"/>
         <constructor-arg index="2" ref="outputUIService"/>
         <constructor-arg index="3" ref="attemptDao"/>
+        <constructor-arg index="4" ref="answerDao"/>
     </bean>
 
 
-    <bean id="questionService" class="net.mysmirnov.quiz.service.CsvQuestionService" init-method="init">
+    <bean id="questionService" class="net.mysmirnov.quiz.service.question.CsvQuestionService" init-method="init">
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
         <property name="resourceName" value="/data.csv"/>
     </bean>
 
-    <bean id="inputUIService" class="net.mysmirnov.quiz.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
+    <bean id="inputUIService" class="net.mysmirnov.quiz.service.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
 
-    <bean id="outputUIService" class="net.mysmirnov.quiz.ui.OutputUIServiceImpl"/>
+    <bean id="outputUIService" class="net.mysmirnov.quiz.service.ui.OutputUIServiceImpl"/>
 
     <bean id="attemptDao" class="net.mysmirnov.quiz.daoimpl.AttemptDaoImpl"/>
+
+    <bean id="answerDao" class="net.mysmirnov.quiz.daoimpl.AnswerDaoImpl"/>
 
 </beans>

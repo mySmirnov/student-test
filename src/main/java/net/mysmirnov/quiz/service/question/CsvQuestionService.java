@@ -48,7 +48,7 @@ public class CsvQuestionService extends QuestionServiceImpl {
     private static ColumnPositionMappingStrategy setColumnMapping() {
         ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
         strategy.setType(Question.class);
-        String[] columns = new String[]{"id", "question", "answer"};
+        String[] columns = new String[]{"id", "questionText", "answerText"};
         strategy.setColumnMapping(columns);
         return strategy;
     }

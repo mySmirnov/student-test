@@ -1,7 +1,6 @@
 package net.mysmirnov.quiz.service.question;
 
 import net.mysmirnov.quiz.model.Question;
-import net.mysmirnov.quiz.service.question.QuestionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +25,12 @@ public abstract class QuestionServiceImpl implements QuestionService {
         if (num >= length() || countOfWrongAnswer > maxNumberOfWrongAnswers) {
             return Optional.empty();
         }
-        return Optional.ofNullable(questions.get(num).getQuestion());
+        return Optional.ofNullable(questions.get(num).getQuestionText());
     }
 
     public boolean checkAnswer(int num, String answer) {
         checkNum(num);
-        if (answer.equals(questions.get(num).getAnswer())) {
+        if (answer.equals(questions.get(num).getAnswerText())) {
             countOfCorrectAnswer++;
             return true;
         } else {

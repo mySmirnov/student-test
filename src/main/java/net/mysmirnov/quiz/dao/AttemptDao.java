@@ -10,7 +10,7 @@ public interface AttemptDao {
     void insert(Attempt attempt) throws SQLException;
 
     // read
-    Optional <Attempt> getById(int id) throws SQLException;
+    Optional <Attempt> findById(int id) throws SQLException;
 
     // update
     void update(Attempt attempt) throws SQLException;

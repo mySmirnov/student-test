@@ -45,18 +45,18 @@ class AnswerDaoImplTest {
     @Test
     void insertAnswer() throws SQLException {
         answerDao.insert(answer);
-        Optional<Answer> answerFromDB = answerDao.getById(answer.getId());
+        Optional<Answer> answerFromDB = answerDao.findById(answer.getId());
         assertEquals(answer, answerFromDB.get());
     }
 
     @Test
     void updateAnswer() throws SQLException {
         answerDao.insert(answer);
-        Optional<Answer> answerFromDB = answerDao.getById(answer.getId());
+        Optional<Answer> answerFromDB = answerDao.findById(answer.getId());
         assertEquals(answer, answerFromDB.get());
         answer.setAnswerText("other text of answer #1");
         answerDao.update(answer);
-        Optional<Answer> updateAnswerFromDB = answerDao.getById(answer.getId());
+        Optional<Answer> updateAnswerFromDB = answerDao.findById(answer.getId());
         assertEquals(answerFromDB.get().getId(), updateAnswerFromDB.get().getId());
         assertNotEquals(answerFromDB.get().getAnswerText(), updateAnswerFromDB.get().getAnswerText());
     }
@@ -64,20 +64,20 @@ class AnswerDaoImplTest {
     @Test
     void deleteAnswer() throws SQLException {
         answerDao.insert(answer);
-        Optional<Answer> answerFromDB = answerDao.getById(answer.getId());
+        Optional<Answer> answerFromDB = answerDao.findById(answer.getId());
         assertEquals(answer, answerFromDB.get());
         answerDao.delete(answer.getId());
-        answerFromDB = answerDao.getById(answer.getId());
+        answerFromDB = answerDao.findById(answer.getId());
         assertEquals(Optional.empty(), answerFromDB);
     }
 
     @Test
     void deleteAnswers() throws SQLException {
         answerDao.insert(answer);
-        Optional<Answer> answerFromDB = answerDao.getById(answer.getId());
+        Optional<Answer> answerFromDB = answerDao.findById(answer.getId());
         assertEquals(answer, answerFromDB.get());
         answerDao.deleteAll();
-        answerFromDB = answerDao.getById(answer.getId());
+        answerFromDB = answerDao.findById(answer.getId());
         assertEquals(Optional.empty(), answerFromDB);
     }
 }

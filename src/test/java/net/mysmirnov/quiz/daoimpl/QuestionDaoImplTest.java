@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +49,14 @@ class QuestionDaoImplTest {
         questionDao.insert(question);
         Optional<Question> questionFromDB = questionDao.findById(question.getId());
         assertEquals(question, questionFromDB.get());
+    }
+
+    @Test
+    void findAll() throws SQLException{
+        questionDao.insert(question);
+        questionDao.insert(question);
+        List<Question> questions = questionDao.findAll();
+        assertEquals(2,questions.size());
     }
 
 

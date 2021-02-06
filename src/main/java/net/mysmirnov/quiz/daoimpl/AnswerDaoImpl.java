@@ -32,7 +32,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
     // TODO: 24.01.2021 getAnswerById(int answerId) имя параметра метода??? и используемого внутри метода id
     @Override
-    public Optional<Answer> getById(int answerId) throws SQLException {
+    public Optional<Answer> findById(int answerId) throws SQLException {
         String query = "SELECT * FROM answer WHERE id = " + answerId;
         try (PreparedStatement stmt = con.prepareStatement(query); ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {

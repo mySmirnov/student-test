@@ -1,7 +1,5 @@
 package net.mysmirnov.quiz.daoimpl;
 
-import net.mysmirnov.quiz.dao.AttemptDao;
-import net.mysmirnov.quiz.model.Answer;
 import net.mysmirnov.quiz.model.Attempt;
 import net.mysmirnov.quiz.utils.JdbcUtils;
 import org.junit.AfterClass;
@@ -51,18 +49,18 @@ class AttemptDaoImplTest {
     @Test
     void insert() throws SQLException {
         attemptDao.insert(attempt);
-        Optional <Attempt> attemptFromDB = attemptDao.getById(attempt.getId());
+        Optional <Attempt> attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(attempt, attemptFromDB.get());
     }
 
     @Test
     void update() throws SQLException {
         attemptDao.insert(attempt);
-        Optional <Attempt> attemptFromDB = attemptDao.getById(attempt.getId());
+        Optional <Attempt> attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(attempt, attemptFromDB.get());
         attempt.setResult(2.00);
         attemptDao.update(attempt);
-        Optional <Attempt>  attemptFromDbUpdate = attemptDao.getById(attempt.getId());
+        Optional <Attempt>  attemptFromDbUpdate = attemptDao.findById(attempt.getId());
         assertEquals(attemptFromDB.get().getId(),attemptFromDbUpdate.get().getId());
         assertNotEquals(attemptFromDB,attemptFromDbUpdate);
     }
@@ -70,20 +68,20 @@ class AttemptDaoImplTest {
     @Test
     void delete() throws SQLException {
         attemptDao.insert(attempt);
-        Optional <Attempt> attemptFromDB = attemptDao.getById(attempt.getId());
+        Optional <Attempt> attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(attempt, attemptFromDB.get());
         attemptDao.delete(attempt.getId());
-        attemptFromDB = attemptDao.getById(attempt.getId());
+        attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(Optional.empty(), attemptFromDB);
     }
 
     @Test
     void deleteAll() throws SQLException {
         attemptDao.insert(attempt);
-        Optional <Attempt> attemptFromDB = attemptDao.getById(attempt.getId());
+        Optional <Attempt> attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(attempt, attemptFromDB.get());
         attemptDao.deleteAll();
-        attemptFromDB = attemptDao.getById(attempt.getId());
+        attemptFromDB = attemptDao.findById(attempt.getId());
         assertEquals(Optional.empty(), attemptFromDB);
     }
 }

@@ -31,7 +31,7 @@ public class AttemptDaoImpl implements AttemptDao {
     }
 
     @Override
-    public Optional<Attempt> getById(int id) throws SQLException {
+    public Optional<Attempt> findById(int id) throws SQLException {
         String query = "SELECT * FROM attempt WHERE id = " + id;
         try (PreparedStatement stmt = con.prepareStatement(query); ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {

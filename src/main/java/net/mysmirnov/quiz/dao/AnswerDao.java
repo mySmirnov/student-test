@@ -11,7 +11,7 @@ public interface AnswerDao {
     void insert(Answer answer) throws SQLException;
 
     // read
-    Optional<Answer> getById(int id) throws SQLException;
+    Optional<Answer> findById(int id) throws SQLException;
 
     // update
     void update(Answer answer) throws SQLException;

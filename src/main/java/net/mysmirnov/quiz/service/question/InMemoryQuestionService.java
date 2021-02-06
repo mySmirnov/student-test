@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class InMemoryQuestionService extends QuestionServiceImpl {
-    private List<Question> list = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
-    public InMemoryQuestionService(List<Question> list) {
-        this.list = list;
+    public InMemoryQuestionService(List<Question> questions) {
+        this.questions = questions;
     }
 
     public InMemoryQuestionService() {
@@ -20,7 +20,7 @@ public class InMemoryQuestionService extends QuestionServiceImpl {
 
     public void init() {
         logger.info("initialisation");
-        setQuestions(list);
+        setQuestions(questions);
     }
 }
 

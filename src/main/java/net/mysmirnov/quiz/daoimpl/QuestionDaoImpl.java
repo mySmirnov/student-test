@@ -5,6 +5,8 @@ import net.mysmirnov.quiz.model.Question;
 import net.mysmirnov.quiz.utils.JdbcUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class QuestionDaoImpl implements QuestionDao {
@@ -39,6 +41,21 @@ public class QuestionDaoImpl implements QuestionDao {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Question> findAll() throws SQLException {
+        List<Question> questions = new ArrayList<>();
+        String query = "SELECT * FROM question";
+        try (PreparedStatement stmt = con.prepareStatement(query); ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String questionText = rs.getString("questionText");
+                String answerText = rs.getString("answerText");
+                questions.add(new Question(id, questionText, answerText));
+            }
+        }
+        return questions;
     }
 
     @Override

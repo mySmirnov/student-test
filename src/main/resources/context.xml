@@ -18,10 +18,15 @@
     </bean>
 
 
-    <bean id="questionService" class="net.mysmirnov.quiz.service.question.CsvQuestionService" init-method="init">
+    <bean id="questionService" class="net.mysmirnov.quiz.service.question.DbQuestionService" init-method="init">
+        <constructor-arg index="0" ref="questionDao"/>
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
-        <property name="resourceName" value="/data.csv"/>
     </bean>
+
+<!--    <bean id="questionService" class="net.mysmirnov.quiz.service.question.CsvQuestionService" init-method="init">-->
+<!--        <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>-->
+<!--        <property name="resourceName" value="/data.csv"/>-->
+<!--    </bean>-->
 
     <bean id="inputUIService" class="net.mysmirnov.quiz.service.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
 
@@ -30,5 +35,7 @@
     <bean id="attemptDao" class="net.mysmirnov.quiz.daoimpl.AttemptDaoImpl"/>
 
     <bean id="answerDao" class="net.mysmirnov.quiz.daoimpl.AnswerDaoImpl"/>
+
+    <bean id="questionDao" class="net.mysmirnov.quiz.daoimpl.QuestionDaoImpl"/>
 
 </beans>

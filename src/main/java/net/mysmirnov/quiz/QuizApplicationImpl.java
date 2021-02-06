@@ -8,33 +8,46 @@ import java.util.Optional;
 
 public class QuizApplicationImpl implements QuizApplication {
     private QuestionService questionService;
-    private InputUIService inputUIService;
-    private OutputUIService outputUIService;
+    private InputUIService input;
+    private OutputUIService output;
+    private boolean exit;
 
-    public QuizApplicationImpl(QuestionService questionService, InputUIService inputUIService, OutputUIService outputUIService) {
+    public QuizApplicationImpl(QuestionService questionService, InputUIService input, OutputUIService output) {
         this.questionService = questionService;
-        this.inputUIService = inputUIService;
-        this.outputUIService = outputUIService;
+        this.input = input;
+        this.output = output;
     }
 
     public void run() {
-        for (int i = 0; i < questionService.length(); i++) {
-            // Задать вопрос
+        for (int i = 0; i < questionService.length() && !exit; i++) {
+// Задать вопрос -------------------------------------------------------------------------------------------------------
             Optional<String> question = questionService.getQuestion(i);
             if (!question.isPresent()) {
                 break;
             }
-            outputUIService.write(question.get());
-            // Принять ответ
-            outputUIService.write(questionService.checkAnswer(i, inputUIService.read()));
+            output.write(question.get());
+// Принять ответ пользователя и выдать результат -----------------------------------------------------------------------
+            processAnswer(i);
         }
-        // Выдать результат опроса
-        outputUIService.write(questionService.report());
-
+// Выдать результат опроса ---------------------------------------------------------------------------------------------
+        output.write(questionService.report());
         if (questionService.resultAll()) {
-            outputUIService.write("Тест пройден успешно!");
+            output.write("Тест пройден успешно!");
         } else {
-            outputUIService.write("Тест провален!");
+            output.write("Тест провален!");
         }
+    }
+
+    private void processAnswer(int i) {
+        while (input.hasNextLine()) {
+            Optional<String> answer = input.read();
+            if (!answer.isPresent()) {
+                output.write(String.format("Вы ввели пустое значение, ответьте на вопрос: "));
+                continue;
+            }
+            output.write(questionService.checkAnswer(i, answer.get()));
+            return;
+        }
+        exit = true;
     }
 }

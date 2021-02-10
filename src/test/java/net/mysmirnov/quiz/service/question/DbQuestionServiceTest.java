@@ -2,8 +2,7 @@ package net.mysmirnov.quiz.service.question;
 
 import net.mysmirnov.quiz.dao.QuestionDao;
 import net.mysmirnov.quiz.model.Question;
-import net.mysmirnov.quiz.utils.JdbcUtils;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 
 public class DbQuestionServiceTest {
     private final List<Question> questions = Arrays.asList(

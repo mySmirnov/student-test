@@ -9,33 +9,39 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="quizApplication" class="net.mysmirnov.quiz.QuizApplicationImpl" init-method="init" destroy-method="destroy">
-        <constructor-arg index="0" ref="questionService"/>
-        <constructor-arg index="1" ref="inputUIService"/>
-        <constructor-arg index="2" ref="outputUIService"/>
-        <constructor-arg index="3" ref="attemptDao"/>
-        <constructor-arg index="4" ref="answerDao"/>
+    <bean id="quizApplication" class="net.mysmirnov.quiz.QuizApplicationImpl">
+        <constructor-arg name="questionService" ref="questionService"/>
+        <constructor-arg name="inputUIService" ref="inputUIService"/>
+        <constructor-arg name="outputUIService" ref="outputUIService"/>
+        <constructor-arg name="attemptDao" ref="attemptDao"/>
+        <constructor-arg name="answerDao" ref="answerDao"/>
     </bean>
-
 
     <bean id="questionService" class="net.mysmirnov.quiz.service.question.DbQuestionService" init-method="init">
-        <constructor-arg index="0" ref="questionDao"/>
+        <constructor-arg name="questionDao" ref="questionDao"/>
         <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>
     </bean>
-
-<!--    <bean id="questionService" class="net.mysmirnov.quiz.service.question.CsvQuestionService" init-method="init">-->
-<!--        <property name="maxNumberOfWrongAnswers" value="${max.number.of.wrong.answers}"/>-->
-<!--        <property name="resourceName" value="/data.csv"/>-->
-<!--    </bean>-->
 
     <bean id="inputUIService" class="net.mysmirnov.quiz.service.ui.InputUIServiceImpl" init-method="init" destroy-method="destroy"/>
 
     <bean id="outputUIService" class="net.mysmirnov.quiz.service.ui.OutputUIServiceImpl"/>
 
-    <bean id="attemptDao" class="net.mysmirnov.quiz.daoimpl.AttemptDaoImpl"/>
+    <bean id="attemptDao" class="net.mysmirnov.quiz.dao.daoimpl.AttemptDaoImpl">
+        <property name="jdbcProvider" ref="jdbcProvider"/>
 
-    <bean id="answerDao" class="net.mysmirnov.quiz.daoimpl.AnswerDaoImpl"/>
+    </bean>
 
-    <bean id="questionDao" class="net.mysmirnov.quiz.daoimpl.QuestionDaoImpl"/>
+    <bean id="answerDao" class="net.mysmirnov.quiz.dao.daoimpl.AnswerDaoImpl">
+        <property name="jdbcProvider" ref="jdbcProvider"/>
+    </bean>
 
+    <bean id="questionDao" class="net.mysmirnov.quiz.dao.daoimpl.QuestionDaoImpl">
+        <property name="jdbcProvider" ref="jdbcProvider"/>
+    </bean>
+
+    <bean id="jdbcProvider" class="net.mysmirnov.quiz.dao.JdbcProvider" init-method="init" destroy-method="destroy" scope="singleton">
+        <constructor-arg name="user" value="${jdbc.user}"/>
+        <constructor-arg name="password" value="${jdbc.password}"/>
+        <constructor-arg name="url" value="${jdbc.url}"/>
+    </bean>
 </beans>

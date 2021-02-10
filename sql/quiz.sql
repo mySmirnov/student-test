@@ -2,12 +2,23 @@ DROP DATABASE IF EXISTS quiz;
 CREATE DATABASE quiz;
 USE quiz;
 
+CREATE TABLE question(
+		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+        questionText  VARCHAR (50),
+        answerText  VARCHAR (50)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE attempt(
+		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+        dates DATE DEFAULT NULL,
+        rating  double DEFAULT NULL
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 CREATE TABLE answer(
 		id INT(11) NOT NULL AUTO_INCREMENT,
 		attemptId INT(11),
         questionId INT(11),
         answerText VARCHAR(50),
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        FOREIGN KEY (questionId) REFERENCES attempt (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-select * from answer;

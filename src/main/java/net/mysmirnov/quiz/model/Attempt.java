@@ -7,6 +7,10 @@ public class Attempt {
     private Date date;
     private double result;
 
+
+    public Attempt() {
+    }
+
     public Attempt(int id, Date date, double result) {
         this.id = id;
         this.date = date;

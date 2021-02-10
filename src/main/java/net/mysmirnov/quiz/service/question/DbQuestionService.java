@@ -1,17 +1,13 @@
 package net.mysmirnov.quiz.service.question;
 
 import net.mysmirnov.quiz.dao.QuestionDao;
-import net.mysmirnov.quiz.daoimpl.QuestionDaoImpl;
-import net.mysmirnov.quiz.model.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DbQuestionService extends QuestionServiceImpl{
-    QuestionDao questionDao;
+    private QuestionDao questionDao;
 
     public QuestionDao getQuestionDao() {
         return questionDao;

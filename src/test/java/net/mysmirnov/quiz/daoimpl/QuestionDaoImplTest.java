@@ -1,9 +1,9 @@
 package net.mysmirnov.quiz.daoimpl;
 
-import net.mysmirnov.quiz.model.Answer;
+import net.mysmirnov.quiz.dao.JdbcProvider;
+import net.mysmirnov.quiz.dao.daoimpl.QuestionDaoImpl;
 import net.mysmirnov.quiz.model.Question;
-import net.mysmirnov.quiz.utils.JdbcUtils;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,28 +15,23 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuestionDaoImplTest {
-    QuestionDaoImpl questionDao = new QuestionDaoImpl();
-    Question question = new Question("Text of question #1" , "Text of answer #1");
-
-    private static boolean setUpIsDone = false;
+    private static JdbcProvider jdbcProvider = new JdbcProvider(
+            "root",
+            "rei36djg",
+            "jdbc:mysql://localhost:3306/quiz?useUnicode=yes&characterEncoding=UTF8&useSSL=false"
+    );
+    private static QuestionDaoImpl questionDao = new QuestionDaoImpl();
+    private Question question = new Question("Text of question #1" , "Text of answer #1");
 
     @BeforeAll
     public static void setUp() {
-        if (!setUpIsDone) {
-            boolean createConnection = JdbcUtils.createConnection();
-            if (!createConnection) {
-                throw new RuntimeException("Can't create connection, stop");
-            }
-            setUpIsDone = true;
-        }
-
+        questionDao.setJdbcProvider(jdbcProvider);
+        jdbcProvider.init();
     }
 
-    @AfterClass
-    public static void close() {
-        if (setUpIsDone) {
-            JdbcUtils.closeConnection();
-        }
+    @AfterAll
+    public static void close() throws SQLException {
+        jdbcProvider.destroy();
     }
 
     @BeforeEach()
@@ -48,7 +43,7 @@ class QuestionDaoImplTest {
     void insert() throws SQLException {
         questionDao.insert(question);
         Optional<Question> questionFromDB = questionDao.findById(question.getId());
-        assertEquals(question, questionFromDB.get());
+        assertEquals(Optional.of(question), questionFromDB);
     }
 
     @Test
@@ -64,7 +59,7 @@ class QuestionDaoImplTest {
     void update() throws SQLException {
         questionDao.insert(question);
         Optional<Question> questionFromDB = questionDao.findById(question.getId());
-        assertEquals(question, questionFromDB.get());
+        assertEquals(Optional.of(question), questionFromDB);
         question.setQuestionText("other text of question #1");
         questionDao.update(question);
         Optional<Question> updateQuestionFromDB = questionDao.findById(question.getId());
@@ -76,7 +71,7 @@ class QuestionDaoImplTest {
     void delete() throws SQLException {
         questionDao.insert(question);
         Optional<Question> questionFromDB = questionDao.findById(question.getId());
-        assertEquals(question, questionFromDB.get());
+        assertEquals(Optional.of(question), questionFromDB);
         questionDao.delete(question.getId());
         questionFromDB = questionDao.findById(question.getId());
         assertEquals(Optional.empty(), questionFromDB);
@@ -86,7 +81,7 @@ class QuestionDaoImplTest {
     void deleteAll() throws SQLException {
         questionDao.insert(question);
         Optional<Question> questionFromDB = questionDao.findById(question.getId());
-        assertEquals(question, questionFromDB.get());
+        assertEquals(Optional.of(question), questionFromDB);
         questionDao.deleteAll();
         questionFromDB = questionDao.findById(question.getId());
         assertEquals(Optional.empty(), questionFromDB);

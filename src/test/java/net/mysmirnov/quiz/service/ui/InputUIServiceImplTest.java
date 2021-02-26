@@ -1,5 +1,6 @@
-package net.mysmirnov.quiz.ui;
+package net.mysmirnov.quiz.service.ui;
 
+import net.mysmirnov.quiz.service.ui.InputUIServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,6 @@ class InputUIServiceImplTest {
         assertEquals(Optional.of("some Text"), inputUIService.read());
         assertEquals(Optional.empty(), inputUIService.read());
     }
-
 
     @Test
     void shouldReturnEmptyIfEnterEmpty(){

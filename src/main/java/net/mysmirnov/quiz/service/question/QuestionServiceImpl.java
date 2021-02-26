@@ -1,4 +1,4 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
 import net.mysmirnov.quiz.model.Question;
 
@@ -22,16 +22,15 @@ public abstract class QuestionServiceImpl implements QuestionService {
     }
 
     public Optional<String> getQuestion(int num) {
-        if (countOfWrongAnswer > maxNumberOfWrongAnswers || num >= length()) {
+        if (num >= length() || countOfWrongAnswer > maxNumberOfWrongAnswers) {
             return Optional.empty();
-        } else {
-            return Optional.of(questions.get(num).getQuestion());
         }
+        return Optional.ofNullable(questions.get(num).getQuestionText());
     }
 
     public boolean checkAnswer(int num, String answer) {
         checkNum(num);
-        if (answer.equals(questions.get(num).getAnswer())) {
+        if (answer.equals(questions.get(num).getAnswerText())) {
             countOfCorrectAnswer++;
             return true;
         } else {
@@ -63,5 +62,4 @@ public abstract class QuestionServiceImpl implements QuestionService {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-
 }

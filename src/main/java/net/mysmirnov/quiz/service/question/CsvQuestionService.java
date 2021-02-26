@@ -1,4 +1,4 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class CsvQuestionService extends QuestionServiceImpl {
     private static ColumnPositionMappingStrategy setColumnMapping() {
         ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
         strategy.setType(Question.class);
-        String[] columns = new String[]{"id", "question", "answer"};
+        String[] columns = new String[]{"id", "questionText", "answerText"};
         strategy.setColumnMapping(columns);
         return strategy;
     }

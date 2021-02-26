@@ -1,4 +1,4 @@
-package net.mysmirnov.quiz.service;
+package net.mysmirnov.quiz.service.question;
 
 import java.util.Optional;
 

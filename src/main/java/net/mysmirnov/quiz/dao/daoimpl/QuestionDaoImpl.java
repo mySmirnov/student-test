@@ -12,12 +12,6 @@ import java.util.Optional;
 public class QuestionDaoImpl implements QuestionDao {
     private JdbcProvider jdbcProvider;
 
-    private String queryInsert;
-    private String queryFindById;
-    private String queryUpdate;
-    private String queryDelete;
-    private String queryDeleteAll;
-
     public QuestionDaoImpl() {
     }
 
@@ -55,14 +49,14 @@ public class QuestionDaoImpl implements QuestionDao {
         String query = "SELECT * FROM question WHERE id = ?";
         try (PreparedStatement stmt = con.prepareStatement(query);) {
             stmt.setInt(1, id);
-            // TODO: 08.02.2021 нужен ли отдельный try with resource
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String questionText = rs.getString("questionText");
-                String answerText = rs.getString("answerText");
-                return Optional.of(new Question(id, questionText, answerText));
+            try(ResultSet rs = stmt.executeQuery()){
+                if (rs.next()) {
+                    String questionText = rs.getString("questionText");
+                    String answerText = rs.getString("answerText");
+                    return Optional.of(new Question(id, questionText, answerText));
+                }
+                return Optional.empty();
             }
-            return Optional.empty();
         }
     }
 
@@ -111,25 +105,5 @@ public class QuestionDaoImpl implements QuestionDao {
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.executeUpdate();
         }
-    }
-
-    public void setQueryInsert(String queryInsert) {
-        this.queryInsert = queryInsert;
-    }
-
-    public void setQueryFindById(String queryFindById) {
-        this.queryFindById = queryFindById;
-    }
-
-    public void setQueryUpdate(String queryUpdate) {
-        this.queryUpdate = queryUpdate;
-    }
-
-    public void setQueryDelete(String queryDelete) {
-        this.queryDelete = queryDelete;
-    }
-
-    public void setQueryDeleteAll(String queryDeleteAll) {
-        this.queryDeleteAll = queryDeleteAll;
     }
 }

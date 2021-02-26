@@ -10,11 +10,6 @@ import java.util.Optional;
 
 public class AttemptDaoImpl implements AttemptDao {
     private JdbcProvider jdbcProvider;
-    private String queryInsert;
-    private String queryFindById;
-    private String queryUpdate;
-    private String queryDelete;
-    private String queryDeleteAll;
 
     public AttemptDaoImpl() {
     }
@@ -53,13 +48,14 @@ public class AttemptDaoImpl implements AttemptDao {
         String query = "SELECT * FROM attempt WHERE id = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Date date = rs.getDate("dates");
-                double rating = rs.getDouble("rating");
-                return Optional.of(new Attempt(id, date, rating));
+            try(ResultSet rs = stmt.executeQuery()){
+                if (rs.next()) {
+                    Date date = rs.getDate("dates");
+                    double rating = rs.getDouble("rating");
+                    return Optional.of(new Attempt(id, date, rating));
+                }
+                return Optional.empty();
             }
-            return Optional.empty();
         }
     }
 
@@ -92,25 +88,5 @@ public class AttemptDaoImpl implements AttemptDao {
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.executeUpdate();
         }
-    }
-
-    public void setQueryInsert(String queryInsert) {
-        this.queryInsert = queryInsert;
-    }
-
-    public void setQueryFindById(String queryFindById) {
-        this.queryFindById = queryFindById;
-    }
-
-    public void setQueryUpdate(String queryUpdate) {
-        this.queryUpdate = queryUpdate;
-    }
-
-    public void setQueryDelete(String queryDelete) {
-        this.queryDelete = queryDelete;
-    }
-
-    public void setQueryDeleteAll(String queryDeleteAll) {
-        this.queryDeleteAll = queryDeleteAll;
     }
 }
